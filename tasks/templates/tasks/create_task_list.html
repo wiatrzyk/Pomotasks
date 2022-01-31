@@ -1,0 +1,19 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Create new list{% endblock %}
+{% load crispy_forms_tags %}
+
+<style>
+	.div {
+	  border-width: 5px !important;
+	}
+</style>
+
+
+{% block content %}
+<form action="/create_task_list/" method="post">
+    <!-- {% csrf_token %} -->
+    {% crispy form %}
+    <!-- <input type="submit" value="Create task"> -->
+</form>
+{% endblock %}

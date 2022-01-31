@@ -1,0 +1,16 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}My tasks lists{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+		<ul class="list-group">
+		{% for l in task_list %}
+			<li class="list-group-item">
+				<a href="/lists/{{l.id}}">
+					<h3>{{ forloop.counter }}: {{l.name}}</h3>
+				</a>
+			</li>
+		{% endfor %}
+		</ul>
+{% endblock %}
