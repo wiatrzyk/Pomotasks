@@ -3,20 +3,23 @@
 {% block title %}{{list_id}}{% endblock %}
 {% load crispy_forms_tags %}
 
-<style>
+<!-- <style>
 	.div {
 	  border-width: 5px !important;
 	}
-</style>
+</style> -->
 
 
 {% block content %}
-Task list content
 <ul class="task-group">
-	{% for l in tasks_list %}
+	{% for task in tasks_list %}
 		<li class="list-group-item">
-				<h3>{{ forloop.counter }}: {{l.name}}</h3>
-			</a>
+				<h3>{{task.name}}</h3>
+				<p>{{task.creation_date}}</p>
+				<p>{{task.description}}</p>
+				<p>
+					<input type="checkbox" id="task_completed"> Task completed
+				</p>
 		</li>
 	{% endfor %}
 	</ul>
