@@ -12,7 +12,7 @@ CHOICES = (
 )
 
 class TaskForm(forms.Form):
-    name = forms.CharField(label='New task', max_length=100)
+    name = forms.CharField(label='Task', max_length=100)
     description = forms.CharField(widget=forms.Textarea, required=False)
     task_list = forms.ChoiceField()
     completed = forms.BooleanField(required=False)
@@ -37,7 +37,7 @@ class TaskForm(forms.Form):
                 Column('target_date', css_class='form-group col-md-auto'),
                 css_class='form-row'
             ),
-            Submit('submit', 'Create new task')
+            Submit('submit', 'Submit', css_class="btn-secondary")
         )
 
 
@@ -48,5 +48,5 @@ class TaskListForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'name',
-            Submit('submit', 'Create new list')
+            Submit('submit', 'Create new list', css_class="btn-secondary")
         )

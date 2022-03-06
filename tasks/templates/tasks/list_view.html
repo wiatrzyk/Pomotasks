@@ -3,24 +3,25 @@
 {% block title %}{{list_id}}{% endblock %}
 {% load crispy_forms_tags %}
 
-<!-- <style>
-	.div {
-	  border-width: 5px !important;
-	}
-</style> -->
-
 
 {% block content %}
-<ul class="task-group">
-	{% for task in tasks_list %}
-		<li class="list-group-item">
-				<h3>{{task.name}}</h3>
-				<p>{{task.creation_date}}</p>
-				<p>{{task.description}}</p>
-				<p>
-					<input type="checkbox" id="task_completed"> Task completed
-				</p>
-		</li>
+
+{% for task_row in tasks_list %}
+<div class="row bg-secondary text-center">
+	{% for task in task_row %}
+	<div class="col-sm-4">
+		<div class="card mt-3 mb-3 shadow-sm">
+			<div class="card-body">
+			  <h5 class="card-title">{{task.name}}</h5>
+			  <p class="card-text">{{task.description}}</p>
+			  <p class="card-text"><small class="text-muted">Target date: {{task.target_date}}</small></p>
+			  <button class="btn btn-dark" onclick="location.href='/update_task/{{ task.id }}'" type="button">Edit</button>
+			  <button class="btn btn-dark" onclick="location.href='/task/{{ task.id }}'" type="button">Time it</button>
+		  </div>
+	  </div>
+	</div>
 	{% endfor %}
-	</ul>
+</div>
+{% endfor %}
+<button class="btn btn-secondary btn-block mt-3 mb-3" onclick="location.href='/create_task'" type="button">New task</button>
 {% endblock %}

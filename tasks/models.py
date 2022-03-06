@@ -19,7 +19,8 @@ class Task(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     target_date = models.DateTimeField(default=None, null=True)
-    time_spent = models.TimeField(null=True)
+    pomodoros = models.IntegerField(default=0, null=False)
+    target_pomodoros = models.IntegerField(default=1, null=False)
 
     def __str__(self) -> str:
         return f'{self.name}; complete status {self.completed}; creation date {self.creation_date}'

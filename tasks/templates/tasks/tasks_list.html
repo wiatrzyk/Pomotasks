@@ -4,13 +4,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-		<ul class="list-group">
-		{% for l in task_list %}
-			<li class="list-group-item">
-				<a href="/lists/{{l.id}}">
-					<h3>{{ forloop.counter }}: {{l.name}}</h3>
-				</a>
-			</li>
-		{% endfor %}
-		</ul>
+<div class="list-group">
+{% for l in task_list %}
+	<a href="/lists/{{l.id}}" class="list-group-item list-group-item-action">
+		<h3>{{l.name}}</h3>
+	</a>
+{% endfor %}
+</ul>
 {% endblock %}

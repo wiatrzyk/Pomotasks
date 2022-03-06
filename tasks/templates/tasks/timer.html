@@ -1,0 +1,121 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}
+Timer
+{% endblock %}
+
+{% block scripts %}
+<script>
+  var pomodoro = {
+  started : false,
+  minutes : 0,
+  seconds : 0,
+  interval : null,
+  minutesDom : null,
+  secondsDom : null,
+  init : function(){
+    var self = this;
+    this.minutesDom = document.querySelector('#minutes');
+    this.secondsDom = document.querySelector('#seconds');
+    this.interval = setInterval(function(){
+      self.intervalCallback.apply(self);
+    }, 1000);
+    document.querySelector('#work').onclick = function(){
+      self.startWork.apply(self);
+    };
+    document.querySelector('#stop').onclick = function(){
+      self.stopTimer.apply(self);
+    };
+    document.querySelector('#pause').onclick = function(){
+      self.pauseTimer.apply(self);
+    };
+  },
+  resetVariables : function(mins, secs, started){
+    this.minutes = mins;
+    this.seconds = secs;
+    this.started = started;
+  },
+  startWork: function() {
+    if(this.minutes == 0){
+      if(this.seconds == 0){
+        this.resetVariables(25, 0, true);
+      }
+    }
+    this.started = true;
+  },
+  stopTimer : function(){
+    this.resetVariables(25, 0, false);
+    this.updateDom();
+  },
+  toDoubleDigit : function(num){
+    if(num < 10) {
+      return "0" + parseInt(num, 10);
+    }
+    return num;
+  },
+  updateDom : function(){
+    this.minutesDom.innerHTML = this.toDoubleDigit(this.minutes);
+    this.secondsDom.innerHTML = this.toDoubleDigit(this.seconds);
+  },
+  intervalCallback : function(){
+    if(!this.started) return false;
+    if(this.seconds == 0) {
+      if(this.minutes == 0) {
+        this.timerComplete();
+        return;
+      }
+      this.seconds = 59;
+      this.minutes--;
+    } else {
+      this.seconds--;
+    }
+    this.updateDom();
+  },
+  pauseTimer : function(){
+    this.started = false;
+  },
+  timerComplete : function(){
+    this.started = false;
+    $.ajax({
+     method: "POST",
+     url: "/update_time/",
+     data: JSON.stringify({"task_id": document.querySelector('div.task').id}),
+     contentType : 'application/json',
+     dataType : 'json',
+     success: function() {
+       alert('success');
+     }
+  });
+  }
+};
+window.onload = function(){
+pomodoro.init();
+};
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="pomodoro-app">
+    <div id="timer">
+      <div id="time" class="display-4 text-center">
+        <span id="minutes">25</span>
+        <span id="colon">:</span>
+        <span id="seconds">00</span>
+      </div>
+      <div id="buttons" class="row justify-content-md-center">
+        <button id="work" class="btn btn-secondary mr-1" >Start</button>
+        <button id="stop" class="btn btn-secondary mr-1" >Restart</button>
+        <button id="pause" class="btn btn-secondary" >Pause</button>
+      </div>
+    </div>
+
+    <div class="task" id="{{task.id}}">
+      <div class ="card mt-3">
+        <h3 class="display-4 ml-3">{{task.name}}</h3>
+        <!-- <p class="lead"><small>Target date: {{task.target_date}</small></p> -->
+        <p class="lead ml-1">{{task.description}}</p>
+      </div>
+    </div>
+
+</div>
+{% endblock %}
