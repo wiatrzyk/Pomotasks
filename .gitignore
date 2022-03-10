@@ -98,3 +98,7 @@ geckodriver.log
 
 .vscode
 *.png
+settings.py
+
+functional_tests
+tasks/migrations

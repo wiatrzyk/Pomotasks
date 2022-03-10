@@ -3,15 +3,15 @@ from django.contrib.auth.models import User
 
 
 class TaskList(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="task_list", null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="task_list")
     name = models.CharField(max_length=255, default='New List')
-    # time_spent = models.TimeField()
     
     def __str__(self) -> str:
         return self.name
 
 
 class Task(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="task")
     task_list = models.ForeignKey(TaskList, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, default='New Task')
     description = models.CharField(max_length=255, default='New Task')

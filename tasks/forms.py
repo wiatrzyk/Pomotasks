@@ -3,13 +3,6 @@ from django.forms.widgets import NumberInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 
-CHOICES = (
-    ("1", "One"),
-    ("2", "Two"),
-    ("3", "Three"),
-    ("4", "Four"),
-    ("5", "Five"),
-)
 
 class TaskForm(forms.Form):
     name = forms.CharField(label='Task', max_length=100)
@@ -17,9 +10,6 @@ class TaskForm(forms.Form):
     task_list = forms.ChoiceField()
     completed = forms.BooleanField(required=False)
     target_date = forms.DateField(widget=NumberInput(attrs={'type':'date'}))
-    # target_date = forms.DateField(widget=NumberInput(attrs={'type':'date'}))
-    # target_date = forms.DateTimeInput()
-    # Date = forms.DateField(widget = forms.SelectDateWidget)
 
     def __init__(self, *args, **kwargs):
         self.choices = kwargs.pop('choices')

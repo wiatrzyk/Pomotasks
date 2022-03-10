@@ -1,11 +1,8 @@
 {% extends "tasks/base.html" %}
 
 {% block title %}{{list_id}}{% endblock %}
-{% load crispy_forms_tags %}
-
 
 {% block content %}
-
 {% for task_row in tasks_list %}
 <div class="row bg-secondary text-center">
 	{% for task in task_row %}
